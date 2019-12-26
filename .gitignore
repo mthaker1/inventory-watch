@@ -1,0 +1,4 @@
+.vscode/
+flask-backend/static/build/
+flask-backend/templates/
+react-frontend/node_modules/
