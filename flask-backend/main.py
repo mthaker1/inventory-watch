@@ -1,9 +1,17 @@
-import flask
+from flask import Flask, render_template, request, jsonify
 
-app = flask.Flask("__main__")
+app = Flask("__main__")
+
+
+@app.route("/notify", methods=["POST"])
+def notify():
+    data = request.get_json()
+    print(data);
+    print(data.get("email"));
+    return jsonify({'result': 'success'});
 
 @app.route("/")
 def my_index():
-    return flask.render_template("index.html")
+    return render_template("index.html")
 
 app.run(debug=True)

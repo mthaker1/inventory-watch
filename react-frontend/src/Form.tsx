@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { FormModel } from './FormModel';
+import axios from 'axios'
 
 const Form = (props: FormModel) => {
     const id = props.id;
@@ -40,16 +41,25 @@ const Form = (props: FormModel) => {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        var xhr = new XMLHttpRequest();
-        xhr.addEventListener('load', response => {
-            console.log(response);
-        });
-        xhr.open('POST', './notify');
-        const form: FormModel = { id, name, url, keyword, email }
-        xhr.send(JSON.stringify(form));
-        return false;
+        var myParams = {
+            id: id,
+            name: name,
+            url: url,
+            keyword: keyword,
+            email: email
+        };
+
+        axios.post('./notify', myParams)
+        .then(function(response){
+          console.log(response);
+           //Perform action based on response
+         })
+         .catch(function(error){
+           console.log(error);
+           //Perform action based on error
+         });
     }
-    
+
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>

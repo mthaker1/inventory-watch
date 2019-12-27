@@ -1,4 +1,6 @@
 .vscode/
 flask-backend/static/build/
 flask-backend/templates/
+flask-backend/__pycache__
 react-frontend/node_modules/
+react-frontend/yarn-error.log
