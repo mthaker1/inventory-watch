@@ -41,23 +41,16 @@ const Form = (props: FormModel) => {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        var myParams = {
-            id: id,
-            name: name,
-            url: url,
-            keyword: keyword,
-            email: email
-        };
+        const formData: FormModel  = { id, name, url, keyword, email };
 
-        axios.post('./notify', myParams)
-        .then(function(response){
+        axios.post('./notify', formData)
+        .then(response => {
           console.log(response);
-           //Perform action based on response
-         })
-         .catch(function(error){
-           console.log(error);
-           //Perform action based on error
-         });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
     }
 
     return (
