@@ -10,17 +10,21 @@ const Home = () => {
     const forms: FormModel[] = [ 
         {
             id: 1,
-            name: 'test',
+            productName: 'test',
             url: 'https://test.com',
             keyword: 'keyword',
             email: 'email@gmail.com',
+            startWatchDate: new Date("2019-12-20"),
+            endWatchDate: new Date("2020-12-10")
         },
         {
             id: 2,
-            name: 'test2',
+            productName: 'test2',
             url: 'https://test.com',
             keyword: 'keyword',
             email: 'email@gmail.com',
+            startWatchDate: new Date("2019-12-20"),
+            endWatchDate: new Date("2020-12-10")
         },
     ]
 
@@ -29,7 +33,7 @@ const Home = () => {
             <h1>Inventory Check</h1>
             <Tabs>
                 <TabList>
-                    { forms.map( form => <Tab>{form.name}</Tab>)}
+                    { forms.map( form => <Tab>{form.productName}</Tab>)}
                 </TabList>
                 { forms.map( form => <TabPanel><Form {...form}/></TabPanel>)}
             </Tabs>
