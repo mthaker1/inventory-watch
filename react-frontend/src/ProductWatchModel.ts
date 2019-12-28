@@ -4,8 +4,8 @@ export interface ProductWatch {
     url: string,
     keyword: string,
     email: string,
-    startWatchDate: string,
-    endWatchDate: string,
+    startWatchDate: Date,
+    endWatchDate: Date,
 }
 
 export const ProductWatchTableColumns = [
@@ -13,6 +13,6 @@ export const ProductWatchTableColumns = [
     { title: 'URL', field: 'url' },
     { title: 'Keyword', field: 'keyword' },
     { title: 'Email', field: 'email' },
-    { title: 'Start Watch Date', field: 'startWatchDate' },
-    { title: 'End Watch Date', field: 'endWatchDate' },
+    { title: 'Start Watch Date', field: 'startWatchDate', type:'date' },
+    { title: 'End Watch Date', field: 'endWatchDate', type:'date' },
 ];

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ProductWatch, ProductWatchTableColumns } from "./ProductWatchModel";
 import axios from "axios";
 import MaterialTable from "material-table";
+import { isString } from "util";
 
 const Home = () => {
   let defaultList: ProductWatch[] = [
@@ -11,8 +12,8 @@ const Home = () => {
       url: "https://test.com",
       keyword: "keyword",
       email: "email@gmail.com",
-      startWatchDate: "2019-12-20",
-      endWatchDate: "2020-12-10"
+      startWatchDate: new Date("Dec 20, 2019"),
+      endWatchDate: new Date("Dec 20, 2020")
     },
     {
       id: "45332",
@@ -20,8 +21,8 @@ const Home = () => {
       url: "https://test.com",
       keyword: "keyword",
       email: "email@gmail.com",
-      startWatchDate: "2019-12-20",
-      endWatchDate: "2020-12-10"
+      startWatchDate: new Date("Dec 20, 2019"),
+      endWatchDate: new Date("Dec 20, 2020")
     }
   ];
 
@@ -41,16 +42,30 @@ const Home = () => {
 
   getProductWatchList();
 
+  const translateDates = (productWatch: ProductWatch) => {
+    const { startWatchDate, endWatchDate } = productWatch;
+    return {
+      ...productWatch,
+      startWatchDate: isString(startWatchDate)
+        ? startWatchDate
+        : startWatchDate.toISOString(),
+      endWatchDate: isString(endWatchDate)
+        ? endWatchDate
+        : endWatchDate.toISOString()
+    };
+  };
+
   return (
     <div className="container">
       <MaterialTable
         title="Inventory Check"
+        // @ts-ignore
         columns={ProductWatchTableColumns}
         data={productWatchList}
         editable={{
           onRowAdd: newData => {
             return axios
-              .post("./notify", newData)
+              .post("./notify", translateDates(newData))
               .then(response => {
                 console.log(response);
               })
@@ -60,9 +75,9 @@ const Home = () => {
               });
           },
           onRowUpdate: (newData, oldData) => {
-              debugger;
+            debugger;
             axios
-              .post("./update", { id: newData.id })
+              .post("./update", translateDates(newData))
               .then(response => {
                 console.log(response);
                 getProductWatchList();
