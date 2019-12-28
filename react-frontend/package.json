@@ -70,7 +70,7 @@
   "homepage": "../static/build",
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "node scripts/build.js && mv ../flask-backend/static/build/index.html ../flask-backend/templates/index.html",
     "test": "node scripts/test.js",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
