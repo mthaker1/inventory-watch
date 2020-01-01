@@ -1,4 +1,4 @@
-# Inventory Check
+# Inventory Watch
 
 First clone the respository, install the dependancies and build the frontend
 ```
