@@ -8,8 +8,8 @@ app = Flask("__main__")
 
 results = [];
 
-@app.route("/notify", methods=["POST"])
-def notify():
+@app.route("/addProductWatch", methods=["POST"])
+def addProductWatch():
     data = request.get_json();
 
     # Declare variables for the data that was passed through
@@ -19,13 +19,6 @@ def notify():
     email = data.get("email");
     startWatchDate = data.get("startWatchDate");
     endWatchDate = data.get("endWatchDate");
-
-    print(productName);
-    print(url);
-    print(keyword);
-    print(email);
-    print(startWatchDate);
-    print(endWatchDate);
 
     addedId = InventoryDataManager.addProductWatch(productName, url, keyword, email, startWatchDate, endWatchDate);
 
