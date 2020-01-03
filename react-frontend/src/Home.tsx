@@ -2,38 +2,19 @@ import React, { useState } from "react";
 import { ProductWatch, ProductWatchTableColumns } from "./ProductWatchModel";
 import axios from "axios";
 import MaterialTable from "material-table";
-import { isString } from "util";
+var moment = require('moment');
 
 const Home = () => {
-  let defaultList: ProductWatch[] = [
-    {
-      id: "1234",
-      productName: "test",
-      url: "https://test.com",
-      keyword: "keyword",
-      email: "email@gmail.com",
-      startWatchDate: new Date("Dec 20, 2019"),
-      endWatchDate: new Date("Dec 20, 2020")
-    },
-    {
-      id: "45332",
-      productName: "test2",
-      url: "https://test.com",
-      keyword: "keyword",
-      email: "email@gmail.com",
-      startWatchDate: new Date("Dec 20, 2019"),
-      endWatchDate: new Date("Dec 20, 2020")
-    }
-  ];
-
-  const [productWatchList, setProductWatchList] = useState(defaultList);
+  const defaultProductWatchList:ProductWatch[] = [];
+  const [productWatchList, setProductWatchList] = useState(defaultProductWatchList);
 
   const getProductWatchList = () => {
     axios
       .get("./getAllData")
       .then(response => {
         console.log(response);
-        setProductWatchList(defaultList);
+        // @ts-ignore We know response is always type ProductWatch[]
+        setProductWatchList(response);
       })
       .catch(error => {
         console.log(error);
@@ -46,12 +27,8 @@ const Home = () => {
     const { startWatchDate, endWatchDate } = productWatch;
     return {
       ...productWatch,
-      startWatchDate: isString(startWatchDate)
-        ? startWatchDate
-        : startWatchDate.toISOString(),
-      endWatchDate: isString(endWatchDate)
-        ? endWatchDate
-        : endWatchDate.toISOString()
+      startWatchDate: moment(startWatchDate).format('yyyy-MM-dd'),
+      endWatchDate: moment(endWatchDate).format('yyyy-MM-dd'),
     };
   };
 
@@ -65,9 +42,9 @@ const Home = () => {
         editable={{
           onRowAdd: newData => {
             return axios
-              .post("./notify", translateDates(newData))
+              .post("./addProductWatch", translateDates(newData))
               .then(response => {
-                console.log(response);
+                getProductWatchList();
               })
               .catch(error => {
                 console.log(error);
@@ -77,7 +54,7 @@ const Home = () => {
           onRowUpdate: (newData, oldData) => {
             debugger;
             axios
-              .post("./update", translateDates(newData))
+              .post("./updateProductWatch", translateDates(newData))
               .then(response => {
                 console.log(response);
                 getProductWatchList();
@@ -90,7 +67,7 @@ const Home = () => {
           },
           onRowDelete: (oldData: ProductWatch) => {
             axios
-              .post("./delete", { id: oldData.id })
+              .post("./deleteProductWatch", { id: oldData.id })
               .then(response => {
                 console.log(response);
                 getProductWatchList();
