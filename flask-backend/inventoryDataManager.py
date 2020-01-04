@@ -19,7 +19,8 @@ class InventoryDataManager:
                     "endWatchDate": row[6]
                 };
                 inventoryData.append(productData);
-                inventoryData.pop(0);
+
+        inventoryData.pop(0);
         return inventoryData;
 
     def addProductWatch(productName: str, url: str, keyword: str, email: str, startWatchDate: str, endWatchDate: str) -> str:
