@@ -7,6 +7,15 @@ var moment = require('moment');
 const Home = () => {
   let productWatchList:ProductWatch[] = [];
 
+  const translateDates = (productWatch: ProductWatch) => {
+    const { startWatchDate, endWatchDate } = productWatch;
+    return {
+      ...productWatch,
+      startWatchDate: moment(startWatchDate).format('YYYY-MM-DD'),
+      endWatchDate: moment(endWatchDate).format('YYYY-MM-DD'),
+    };
+  };
+
   const getProductWatchList = () => {
     axios
       .get("./getInventoryData")
@@ -20,15 +29,6 @@ const Home = () => {
   };
 
   getProductWatchList();
-
-  const translateDates = (productWatch: ProductWatch) => {
-    const { startWatchDate, endWatchDate } = productWatch;
-    return {
-      ...productWatch,
-      startWatchDate: moment(startWatchDate).format('YYYY-MM-DD'),
-      endWatchDate: moment(endWatchDate).format('YYYY-MM-DD'),
-    };
-  };
 
   return (
     <div className="container">
@@ -50,7 +50,6 @@ const Home = () => {
               });
           },
           onRowUpdate: (newData, oldData) => {
-            debugger;
             axios
               .post("./updateProductWatch", translateDates(newData))
               .then(response => {
