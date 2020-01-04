@@ -4,7 +4,23 @@ import csv;
 class InventoryDataManager:
 
     def getInventory():
-        return False;
+
+        inventoryData = [];
+        with open('inventoryWatchData.csv', "r", newline='') as f:
+            csvreader = csv.reader(f, delimiter=",")
+            for row in csvreader:
+                productData = {
+                    "id": row[0],
+                    "productName": row[1],
+                    "url": row[2],
+                    "keyword": row[3],
+                    "email": row[4],
+                    "startWatchDate": row[5],
+                    "endWatchDate": row[6]
+                };
+                inventoryData.append(productData);
+                inventoryData.pop(0);
+        return inventoryData;
 
     def addProductWatch(productName: str, url: str, keyword: str, email: str, startWatchDate: str, endWatchDate: str) -> str:
 

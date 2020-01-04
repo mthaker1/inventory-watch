@@ -10,7 +10,7 @@ const Home = () => {
 
   const getProductWatchList = () => {
     axios
-      .get("./getAllData")
+      .get("./getInventoryData")
       .then(response => {
         console.log(response);
         // @ts-ignore We know response is always type ProductWatch[]

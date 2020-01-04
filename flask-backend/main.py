@@ -8,6 +8,12 @@ app = Flask("__main__")
 
 results = [];
 
+
+@app.route("/getInventoryData", methods=["GET"])
+def getInventoryData():
+    inventoryData = InventoryDataManager.getInventory();
+    return jsonify(inventoryData);
+
 @app.route("/addProductWatch", methods=["POST"])
 def addProductWatch():
     data = request.get_json();
