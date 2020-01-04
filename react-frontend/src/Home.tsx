@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ProductWatch, ProductWatchTableColumns } from "./ProductWatchModel";
 import axios from "axios";
 import MaterialTable from "material-table";
 var moment = require('moment');
 
 const Home = () => {
-  let productWatchList:ProductWatch[] = [];
-
+  let defaultList:ProductWatch[] = [];
+  const [productWatchList, setProductWatchList] = useState(defaultList);
+  const [test, setTest] = useState(0);
+  useEffect(() => {
+    axios
+      .get("./getInventoryData")
+      .then(response => {
+        // @ts-ignore We know response.data is always type ProductWatch[]
+        setProductWatchList(response.data.map(productWatch => translateDates(productWatch)));
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [test]);
+  
   const translateDates = (productWatch: ProductWatch) => {
     const { startWatchDate, endWatchDate } = productWatch;
     return {
@@ -15,20 +29,6 @@ const Home = () => {
       endWatchDate: moment(endWatchDate).format('YYYY-MM-DD'),
     };
   };
-
-  const getProductWatchList = () => {
-    axios
-      .get("./getInventoryData")
-      .then(response => {
-        // @ts-ignore We know response is always type ProductWatch[]
-        productWatchList = response.data.map(productWatch => translateDates(productWatch));
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  getProductWatchList();
 
   return (
     <div className="container">
@@ -42,7 +42,7 @@ const Home = () => {
             return axios
               .post("./addProductWatch", translateDates(newData))
               .then(response => {
-                getProductWatchList();
+                setTest(1);
               })
               .catch(error => {
                 console.log(error);
@@ -54,7 +54,7 @@ const Home = () => {
               .post("./updateProductWatch", translateDates(newData))
               .then(response => {
                 console.log(response);
-                getProductWatchList();
+                setTest(2);
               })
               .catch(error => {
                 console.log(error);
@@ -67,7 +67,7 @@ const Home = () => {
               .post("./deleteProductWatch", { id: oldData.id })
               .then(response => {
                 console.log(response);
-                getProductWatchList();
+                setTest(3);
               })
               .catch(error => {
                 console.log(error);
