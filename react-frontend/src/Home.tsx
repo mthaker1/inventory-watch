@@ -1,20 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { ProductWatch, ProductWatchTableColumns } from "./ProductWatchModel";
 import axios from "axios";
 import MaterialTable from "material-table";
 var moment = require('moment');
 
 const Home = () => {
-  const defaultProductWatchList:ProductWatch[] = [];
-  const [productWatchList, setProductWatchList] = useState(defaultProductWatchList);
+  let productWatchList:ProductWatch[] = [];
 
   const getProductWatchList = () => {
     axios
       .get("./getInventoryData")
       .then(response => {
-        console.log(response);
         // @ts-ignore We know response is always type ProductWatch[]
-        setProductWatchList(response);
+        productWatchList = response.data;
       })
       .catch(error => {
         console.log(error);
