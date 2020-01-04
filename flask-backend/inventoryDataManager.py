@@ -1,5 +1,7 @@
 import uuid;
 import csv;
+import os;
+import time;
 
 class InventoryDataManager:
 
@@ -9,19 +11,22 @@ class InventoryDataManager:
         with open('inventoryWatchData.csv', "r", newline='') as f:
             csvreader = csv.reader(f, delimiter=",")
             for row in csvreader:
-                productData = {
-                    "id": row[0],
-                    "productName": row[1],
-                    "url": row[2],
-                    "keyword": row[3],
-                    "email": row[4],
-                    "startWatchDate": row[5],
-                    "endWatchDate": row[6]
-                };
-                inventoryData.append(productData);
+                if(len(row) == 7):
+                    productData = {
+                        "id": row[0],
+                        "productName": row[1],
+                        "url": row[2],
+                        "keyword": row[3],
+                        "email": row[4],
+                        "startWatchDate": row[5],
+                        "endWatchDate": row[6]
+                    };
+                    inventoryData.append(productData);
 
         inventoryData.pop(0);
         return inventoryData;
+
+
 
     def addProductWatch(productName: str, url: str, keyword: str, email: str, startWatchDate: str, endWatchDate: str) -> str:
 
@@ -49,5 +54,30 @@ class InventoryDataManager:
         return newId;
 
 
-    def deleteProductWatch():
-        return False;
+    def deleteProductWatch(id: str):
+        with open('inventoryWatchData.csv', 'r') as input, open('inventoryWatchDataUpdate.csv', 'w', newline='') as output:
+            writer = csv.writer(output)
+            for row in csv.reader(input):
+                if row[0] != id:
+                    writer.writerow(row)
+
+        os.remove("inventoryWatchData.csv");
+        os.rename('inventoryWatchDataUpdate.csv','inventoryWatchData.csv')
+        time.sleep(5);
+
+
+    def updateProductWatch(id: str, productName: str, url: str, keyword: str, email: str, startWatchDate: str, endWatchDate: str):
+        with open('inventoryWatchData.csv', 'r') as input, open('inventoryWatchDataUpdate.csv', 'w', newline='') as output:
+            writer = csv.writer(output)
+            for row in csv.reader(input):
+                row[1] = productName;
+                row[2] = url;
+                row[3]= keyword;
+                row[4] = email;
+                row[5] = startWatchDate;
+                row[6] = endWatchDate;
+                writer.writerow(row);
+
+        os.remove("inventoryWatchData.csv");
+        os.rename('inventoryWatchDataUpdate.csv','inventoryWatchData.csv')
+        time.sleep(5);
