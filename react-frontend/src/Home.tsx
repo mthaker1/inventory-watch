@@ -7,7 +7,7 @@ var moment = require('moment');
 const Home = () => {
   let defaultList:ProductWatch[] = [];
   const [productWatchList, setProductWatchList] = useState(defaultList);
-  const [test, setTest] = useState(0);
+  const [change, triggerChange] = useState(false);
   useEffect(() => {
     axios
       .get("./getInventoryData")
@@ -19,7 +19,7 @@ const Home = () => {
       .catch(error => {
         console.log(error);
       });
-  }, [test]);
+  }, [change]);
   
   const translateDates = (productWatch: ProductWatch) => {
     const { startWatchDate, endWatchDate } = productWatch;
@@ -42,7 +42,7 @@ const Home = () => {
             return axios
               .post("./addProductWatch", translateDates(newData))
               .then(response => {
-                setTest(1);
+                triggerChange(!change);
               })
               .catch(error => {
                 console.log(error);
@@ -54,7 +54,7 @@ const Home = () => {
               .post("./updateProductWatch", translateDates(newData))
               .then(response => {
                 console.log(response);
-                setTest(2);
+                triggerChange(!change);
               })
               .catch(error => {
                 console.log(error);
@@ -67,7 +67,7 @@ const Home = () => {
               .post("./deleteProductWatch", { id: oldData.id })
               .then(response => {
                 console.log(response);
-                setTest(3);
+                triggerChange(!change);
               })
               .catch(error => {
                 console.log(error);
