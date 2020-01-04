@@ -12,7 +12,7 @@ const Home = () => {
       .get("./getInventoryData")
       .then(response => {
         // @ts-ignore We know response is always type ProductWatch[]
-        productWatchList = response.data;
+        productWatchList = response.data.map(productWatch => translateDates(productWatch));
       })
       .catch(error => {
         console.log(error);
@@ -25,8 +25,8 @@ const Home = () => {
     const { startWatchDate, endWatchDate } = productWatch;
     return {
       ...productWatch,
-      startWatchDate: moment(startWatchDate).format('yyyy-MM-dd'),
-      endWatchDate: moment(endWatchDate).format('yyyy-MM-dd'),
+      startWatchDate: moment(startWatchDate).format('YYYY-MM-DD'),
+      endWatchDate: moment(endWatchDate).format('YYYY-MM-DD'),
     };
   };
 
