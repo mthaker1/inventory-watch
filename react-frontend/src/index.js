@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Home from './Home';
-    
+
+window.addEventListener('unload', () => {
+    navigator.sendBeacon('./closeInventoryWatch', {});
+});
+
 ReactDOM.render(
     <Home/>,document.getElementById('root')
 );
