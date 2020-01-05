@@ -1,2 +1,1 @@
-﻿Id,Headphones2,http://local.com,Out of Stock,test@gmail.com,2020-01-04,2020-01-06
-0eefc397-1dd2-4aa6-a14f-d20ef462ba64,Laptop,https://www.bestbuy.ca/en-ca/product/dell-xps-13-3-laptop-platinum-silver-intel-core-i7-10710u-512gb-ssd-16gb-ram-windows-10/14209045,Sold out online,test@email.com,2020-01-04,2020-01-07
+﻿Id,ProductName,URL,Keyword,Email,StartWatchDate,EndWatchDate
