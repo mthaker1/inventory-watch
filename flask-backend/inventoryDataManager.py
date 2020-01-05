@@ -63,7 +63,7 @@ class InventoryDataManager:
 
         os.remove("inventoryWatchData.csv");
         os.rename('inventoryWatchDataUpdate.csv','inventoryWatchData.csv')
-        time.sleep(5);
+        time.sleep(3);
 
 
     def updateProductWatch(id: str, productName: str, url: str, keyword: str, email: str, startWatchDate: str, endWatchDate: str):
@@ -80,4 +80,4 @@ class InventoryDataManager:
 
         os.remove("inventoryWatchData.csv");
         os.rename('inventoryWatchDataUpdate.csv','inventoryWatchData.csv')
-        time.sleep(5);
+        time.sleep(3);
